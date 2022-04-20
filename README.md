@@ -1,60 +1,3 @@
-# ✨ So you want to sponsor a contest
-
-This `README.md` contains a set of checklists for our contest collaboration.
-
-Your contest will use two repos: 
-- **a _contest_ repo** (this one), which is used for scoping your contest and for providing information to contestants (wardens)
-- **a _findings_ repo**, where issues are submitted. 
-
-Ultimately, when we launch the contest, this contest repo will be made public and will contain the smart contracts to be reviewed and all the information needed for contest participants. The findings repo will be made public after the contest is over and your team has mitigated the identified issues.
-
-Some of the checklists in this doc are for **C4 (🐺)** and some of them are for **you as the contest sponsor (⭐️)**.
-
----
-
-# Contest setup
-
-## ⭐️ Sponsor: Provide contest details
-
-Under "SPONSORS ADD INFO HERE" heading below, include the following:
-
-- [ ] Name of each contract and:
-  - [ ] lines of code in each
-  - [ ] external contracts called in each
-  - [ ] libraries used in each
-- [ ] Describe any novel or unique curve logic or mathematical models implemented in the contracts
-- [ ] Does the token conform to the ERC-20 standard? In what specific ways does it differ?
-- [ ] Describe anything else that adds any special logic that makes your approach unique
-- [ ] Identify any areas of specific concern in reviewing the code
-- [ ] Add all of the code to this repo that you want reviewed
-- [ ] Create a PR to this repo with the above changes.
-
----
-
-# ⭐️ Sponsor: Provide marketing details
-
-- [ ] Your logo (URL or add file to this repo - SVG or other vector format preferred)
-- [ ] Your primary Twitter handle
-- [ ] Any other Twitter handles we can/should tag in (e.g. organizers' personal accounts, etc.)
-- [ ] Your Discord URI
-- [ ] Your website
-- [ ] Optional: Do you have any quirks, recurring themes, iconic tweets, community "secret handshake" stuff we could work in? How do your people recognize each other, for example? 
-- [ ] Optional: your logo in Discord emoji format
-
----
-
-# Contest prep
-
-## ⭐️ Sponsor: Contest prep
-- [ ] Make sure your code is thoroughly commented using the [NatSpec format](https://docs.soliditylang.org/en/v0.5.10/natspec-format.html#natspec-format).
-- [ ] Modify the bottom of this `README.md` file to describe how your code is supposed to work with links to any relevent documentation and any other criteria/details that the C4 Wardens should keep in mind when reviewing. ([Here's a well-constructed example.](https://github.com/code-423n4/2021-06-gro/blob/main/README.md))
-- [ ] Please have final versions of contracts and documentation added/updated in this repo **no less than 8 hours prior to contest start time.**
-- [ ] Ensure that you have access to the _findings_ repo where issues will be submitted.
-- [ ] Promote the contest on Twitter (optional: tag in relevant protocols, etc.)
-- [ ] Share it with your own communities (blog, Discord, Telegram, email newsletters, etc.)
-- [ ] Optional: pre-record a high-level overview of your protocol (not just specific smart contract functions). This saves wardens a lot of time wading through documentation.
-- [ ] Designate someone (or a team of people) to monitor DMs & questions in the C4 Discord (**#questions** channel) daily (Note: please *don't* discuss issues submitted by wardens in an open channel, as this could give hints to other wardens.)
-- [ ] Delete this checklist and all text above the line below when you're ready.
 
 ---
 
@@ -69,4 +12,82 @@ Under "SPONSORS ADD INFO HERE" heading below, include the following:
 
 This repo will be made public before the start of the contest. (C4 delete this line when made public)
 
-[ ⭐️ SPONSORS ADD INFO HERE ]
+# Contest Scope
+This contest is open for one week. Representatives from Tribe will be available in the Code Arena Discord to answer any questions during the contest period. 
+
+The focus for the contest is to try and find:
+* any logic errors or ways to drain funds from the protocol in a way that is advantageous for an attacker at the expense of users with funds invested in the protocol.
+* Ways to corrupt state through improper state transitions that brick functionality.
+
+
+ Wardens should assume that governance variables are set sensibly (unless they can find a way to change the value of a governance variable, and not counting social engineering approaches for this).
+
+## Overview
+The xTRIBE tokenomics upgrade combines a few features into one new governance token:
+* autocompounding single sided staking rewards
+* multi-delegation capabilities
+* reward delegation
+
+https://tribe.fei.money/t/xtribe-tokenomics-upgrade/4038
+
+Additionally, this contest will review "Flywheel v2" which handles the reward delegation component.
+---
+Pulling in changes:
+1. clone the repo
+2. download foundry (https://github.com/foundry-rs/foundry)
+3. forge install
+
+This will clone and pull in all the libs.
+
+---
+Libraries used:
+* solmate
+* OpenZeppelin EnumerableSet
+
+---
+# Contracts in scope
+## xTRIBE
+
+source: `lib/xTRIBE/src/xTRIBE.sol`
+LoC: 150
+
+Description: The xTRIBE token is essentially a combination of ERC20Gauges, ERC20MultiVotes, and xERC4626 with a Multicall. An important security consideration is that it combines the TRIBE voting balance with xTRIBE balance. It should not be possible to double count votes. 
+
+## Flywheel v2
+
+source: `lib/flywheel-v2/src/FlywheelCore.sol`
+LoC: 270
+
+Description: FlywheelCore is an accounting layer for a rewards distribution of a single token to multiple reward strategies. See the [Flywheel V2 README](https://github.com/fei-protocol/flywheel-v2) for more details.
+
+---
+
+source: `lib/flywheel-v2/src/rewards/FlywheelGaugeRewards.sol`
+LoC: 250
+
+Description: FlywheelGaugeRewards is a "rewards module" for flywheel core which reads in rewards balances from the ERC20Gauges contract. The rewards are batched into cycles, which can be queued all at once or paginated to support a large number of reward tokens.
+
+This contract is the most complex piece of the system, as it integrates FlywheelCore and ERC20Gauges with state being held in all 3 locations.
+
+If a gauge is deprecated, it should return 0 for all future cycles until re-added. If it is currently a part of a cycle, those rewards should distribute normally.
+
+---
+
+source: `lib/flywheel-v2/src/token/ERC20Gauges.sol`
+LoC: 600
+
+Description: ERC20Gauges allows liquid voting on a set of gauges. The weights are allocated pro-rata and can be used for any kind of resource allocation. The main use case is reward direction, such as in FlywheelGaugeRewards and similar to Curve finance or Tokemak.
+
+---
+
+source: `lib/flywheel-v2/src/token/ERC20MultiVotes.sol`
+LoC: 400
+
+Description: Similar to OpenZeppelin [ERC20Votes](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#ERC20Votes), but uses a multi-delegation algorithm where users can partially delegate to multiple addresses.
+
+## ERC4626
+
+source: `lib/ERC4626/src/xERC4626.sol`
+LoC: 100
+
+Description: an "xToken" which autocompounds single sided rewards. Should be completely price manipulation resistant due to internal balances being used.
