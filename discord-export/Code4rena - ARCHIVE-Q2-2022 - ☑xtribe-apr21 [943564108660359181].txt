@@ -1,0 +1,205 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-Q2-2022 / ☑xtribe-apr21
+==============================================================
+
+[02/16/2022 5:48 PM] liveactionllamac4 (pinned)
+👋 Hello and welcome to the contest channel for the $75K USDC Tribe Turbo contest!
+
+📆 Contest opens February 17, 2022, at 0:00 UTC (in about 6 hours!) and runs through February 23, 2022 at 23:59 UTC (7 days).
+
+Please give a warm welcome to the Tribe Turbo team, particularly @Joey S, who will be available for questions either here in the channel or via DM. 
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this contest, consider enabling notifications for this channel. 🐺 ⏰
+
+{Reactions}
+Tribelogo (2) 🥳 (3) 
+
+[02/16/2022 5:55 PM] itsmetechjay
+Pinned a message.
+
+
+[02/16/2022 6:09 PM] joeysantoro
+👋
+
+{Reactions}
+👋 (16) peepoeyes (4) 
+
+[02/18/2022 7:55 AM] cmichel
+so each user deploys their own safe and they are the only one who can interact with it (besides the modules for some functions)? Because the safe's default authority only allows calls from the router and the router checks that the caller is the safe owner?
+
+
+[02/20/2022 5:51 PM] joeysantoro
+The default authority manages access, which in this case includes the router and savior. As the owner, the user can change or remove the authority to set their own policy
+
+
+[02/20/2022 6:15 PM] cmichel
+ok so if they open the safe up for everyone, you expect the safe users not to use the router because there's still the `authenticate` (`caller == safe owner`)restriction on it?
+
+
+[02/20/2022 9:26 PM] joeysantoro
+Yeah the router wouldn’t work in that case
+
+
+[02/23/2022 9:36 PM] dravee
+Lol omg, 1st time seeing that. Your code is **amazingly** squeaky clean.
+I'm used to writing long QA reports & long gas reports. Well... Let's say that I'm very curious about how this could be optimized further 😄 
+Well done dear sponsor :hi5:
+
+{Reactions}
+same (5) 
+
+[02/23/2022 9:43 PM] ruhum
+t11s is simply OP
+
+{Reactions}
+chefskiss (3) 
+
+[02/24/2022 12:02 AM] C4
+**🚨 CONTEST ALERT**
+
+@🐺wardens The **Tribe Turbo** contest is now closed! Huge thanks to everyone who participated🔍, whether you submitted a finding or not.
+
+What's next: the Tribe Turbo team will review the findings over the next couple of days, and then we'll pass them off to the judge. Keep an eye on #📢announcements for regular updates on how the contest is progressing through awarding 🤑🏆, judging 🧑‍⚖️ and reporting 📜. Feel free to ping an organizer if you have questions along the way!
+
+{Reactions}
+partyCat (2) 
+
+[02/24/2022 6:39 AM] 0xliumin#4064
+hello, can I DM a c4 person about this contest?
+
+
+[02/24/2022 2:58 PM] itsmetechjay
+If you can complete this form here: https://code4rena.com/help/ we can get the first person available on the C4 team to assist you 🙂
+
+{Embed}
+https://code4rena.com/help/
+Help | Code 423n4
+Need help with something? Contact us here.
+Code4rena - ARCHIVE-Q2-2022 - ☑xtribe-apr21 [943564108660359181].txt_Files/C4-banner-7C19B.png
+
+{Reactions}
+👍 
+
+[02/24/2022 9:45 PM] 0xliumin#4064
+I am getting an error every time I try to submit 🤦‍♂️
+
+
+[02/24/2022 9:47 PM] itsmetechjay
+I'll reach out.
+
+
+[04/07/2022 3:03 PM] samruna
+Did award distribution happen already?
+
+
+[04/07/2022 4:32 PM] itsmetechjay
+Yes Tribe Turbo awards went out earlier this week. See this post. https://discord.com/channels/810916927919620096/810929015509483554/961030840643645520
+
+
+[04/20/2022 7:04 AM] kartoonjoy
+👋 Hello and welcome to the contest channel for the $75K USDC **xTRIBE** contest!
+
+📆 Contest opens April 21, 2022 at 0:00 UTC and runs through April 27, 2022 at 23:59 UTC (7 days).
+
+Please give a warm welcome to the xTRIBE team, particularly @Joey S and @tomwaite, who will be available for questions either here in the channel or via DM.
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this contest, consider enabling notifications for this channel. 🐺 ⏰
+
+Contest Page: https://code4rena.com/contests/2022-04-xtribe-contest
+
+{Embed}
+https://code4rena.com/contests/2022-04-xtribe-contest
+Code4rena xTRIBE contest
+$75,000 USDC
+21 April 2022—27 April 2022
+Code4rena - ARCHIVE-Q2-2022 - ☑xtribe-apr21 [943564108660359181].txt_Files/C4-banner-7C19B.png
+
+{Reactions}
+👍 (3) 
+
+[04/21/2022 5:19 AM] 100proof
+Can the tests in `lib/ds-test` be run? What are the installation steps?
+
+
+[04/21/2022 9:20 AM] vad37
+Quick test way
+clone the sub gitmodule original repo https://github.com/code-423n4/2022-04-xtribe/blob/main/.gitmodules
+install foundry: https://book.getfoundry.sh/getting-started/installation.html
+Pull git submodule: `git submodule update --init`
+Build: `forge build`
+Test with `forge test`
+Then do the same thing again for xTRIBE, flywheel and ERC4626
+
+{Reactions}
+hi5 (3) 
+
+[04/22/2022 9:04 PM] ruhum
+Where can we find the FlywheelBooster contract? https://github.com/fei-protocol/flywheel-v2/blob/main/src/FlywheelCore.sol#L41
+
+{Embed}
+https://github.com/fei-protocol/flywheel-v2/blob/main/src/FlywheelCore.sol
+flywheel-v2/FlywheelCore.sol at main · fei-protocol/flywheel-v2
+General Token Incentives Infrastructure. Contribute to fei-protocol/flywheel-v2 development by creating an account on GitHub.
+Code4rena - ARCHIVE-Q2-2022 - ☑xtribe-apr21 [943564108660359181].txt_Files/flywheel-v2-C36E5
+
+
+[04/25/2022 8:14 PM] joeysantoro
+Its just an optional module, no boosters are currently in use
+
+
+[04/25/2022 8:14 PM] joeysantoro
+Please @me so I get a notification if anyone has questions!
+
+
+[04/26/2022 2:55 AM] teryanarmen
+@Joey S Is there a contract that implements IRewardStream that we can look at?
+
+
+[04/26/2022 3:18 AM] joeysantoro
+not at the moment, but assume it always transfers exactly the amount of tokens it returns in the function call
+
+{Reactions}
+👍 
+
+[04/26/2022 5:57 AM] yash99
+@Joey S Is `FlywheelStaticRewards` in scope? Noticed that it was part of the quantstamp report but isn't listed in this contest scope
+
+
+[04/26/2022 3:40 PM] 0xdjango
+Hey @Joey S are the `ERC4626Router` contracts in scope?
+
+
+[04/26/2022 7:27 PM] joeysantoro
+Not in scope!
+
+{Reactions}
+👍 
+
+[04/26/2022 7:27 PM] joeysantoro
+Not in scope!
+
+{Reactions}
+👍 
+
+[04/28/2022 12:02 AM] C4
+**🚨 CONTEST ALERT**
+
+@🐺wardens The xTRIBE contest is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: the xTRIBE team will review the findings over the next couple of days, and then we'll pass them off to the judge. Keep an eye on #📢announcements for regular updates on how the contest is progressing through awarding 🤑🏆, judging 🧑‍⚖️ and reporting 📜. Feel free to ping a gardener if you have questions along the way!
+
+
+[06/29/2022 6:20 AM] catchup#2659
+Hi, any news on the audit report?
+
+
+[06/29/2022 7:11 PM] itsmetechjay
+The draft report is with the sponsor for review.
+
+{Reactions}
+👍🏻 
+
+==============================================================
+Exported 31 message(s)
+==============================================================
